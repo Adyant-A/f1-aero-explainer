@@ -22,6 +22,56 @@
     </p>
     <h2>Bernoulli's Principle</h2>
     <p>Bernoulli's principles explains the relationship between air speed and pressure: faster air = lower pressure, slower air = lower pressure. This same principle can be seen in our everyday lives. When we stick our hand out of a moving car's window, we can immediately feel the air pushing against our hand. But when we put our palm down we feel less force whereas if we keep our palm forward, it feels like our hand is being pushed back. This happens because our hand slows down the air in the front (high pressure) and air around the it moves faster (low pressure). This pressure difference is what pushes your hand toward the low-pressure area. In F1, the same physics can be applied. By designing the car's underbody to accelerate airflow beneath it, engineers create a low-pressure zone under the car. This low pressure effectively sucks the car towards the ground, increasing downforce without significantly increasing drag.</p>
-</body>
+    <br>
+    <h2>Venturi Tunnels</h2>
+    <p>If faster airflow creates lower pressure, how do F1 cars take advantage of this to generate downforce? You might be thinking that F1 cars would utilize big wings or modifying the bodywork of the car, but actually F1 engineers focus on the underside of the car. Specifically the focus on the floor's design, through Venturi Tunnels that channel and accelerate the air beneath the car.
+    </p>
+    <p>These sculpted channels are meticulously created to handle the air passing through the underside of the car. As air enters these tunnels, its forced into the narrow throat of the tunnel, and is forced to speed up similar to squeezing a garden hose. As we learned from Bernoulli's principle, the faster air creates lower pressure, which pulls the car downwards. The rear diffuser at the back of the car now plays its crucial role. The rear diffuser which is the angled section at the back of an F1 car's floor helps manage the airflow that is leaving the underneath of the car. It's function is similar to that of a funnel: air 
+    that has been accelerated through the Venturi tunnels is allowed to expand 
+    gradually as it exits the car. This smooth expansion prevents turbulence, 
+    maintains downforce, and minimizes drag.</p>
+    <p>
+    Overall, by enginnering this tremoundous technology, engineers can generate tremoundous levels of grip while keeping the car aerodynamically efficient. This balance is crucial in Formula 1, where every fraction of a second counts.
+    </p>
+    <div style="text-align:center;">
+    <svg width="700" height="300" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
 
+        <!-- Background -->
+        <rect width="700" height="300" fill="#F2F2F2"/>
+
+        <!-- Wide inlet -->
+        <rect x="50" y="140" width="150" height="40" fill="#cccccc"/>
+        <text x="125" y="90" text-anchor="middle" font-size="14" fill="#333">Wide Section</text>
+        <text x="125" y="200" text-anchor="middle" font-size="14" fill="#333">Slow Air → High Pressure</text>
+
+        <!-- Narrow throat -->
+        <rect x="250" y="145" width="100" height="30" fill="#999999"/>
+        <text x="300" y="90" text-anchor="middle" font-size="14" fill="#333">Throat</text>
+        <text x="300" y="200" text-anchor="middle" font-size="14" fill="#333">Fast Air → Low Pressure</text>
+
+        <!-- Diffuser -->
+        <rect x="400" y="140" width="200" height="40" fill="#cccccc"/>
+        <text x="500" y="90" text-anchor="middle" font-size="14" fill="#333">Diffuser</text>
+        <text x="500" y="200" text-anchor="middle" font-size="14" fill="#333">Air slows → Pressure returns</text>
+
+        <!-- Airflow arrows -->
+        <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,10 L10,5 z" fill="#00aaff" />
+            </marker>
+        </defs>
+
+        <!-- Arrows centered above each section -->
+        <line x1="75" y1="120" x2="175" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)"/>
+        <line x1="275" y1="120" x2="325" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)"/>
+        <line x1="425" y1="120" x2="575" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)"/>
+
+    </svg>
+
+    <p class="caption">
+        Diagram illustrating the Venturi effect: airflow speeds up in the narrow throat,
+        lowering pressure, and expands smoothly in the diffuser.
+    </p>
+</div>
+</body>
 </html>
