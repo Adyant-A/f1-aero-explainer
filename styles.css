@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Oswald:wght@200..700&display=swap');
 
-/*Global / Body*/
+/*Body*/
 
 body {
     font-family: 'Inter', sans-serif;
@@ -117,4 +117,21 @@ button:hover,
 .art-item p {
     font-size: 14px;
     margin-top: 10px;
+}
+/* Intro Image */
+img {
+    display: block;
+    margin: 50px auto 12px auto;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* Image caption (uses normal <p>) */
+p.caption {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 50px;
 }
