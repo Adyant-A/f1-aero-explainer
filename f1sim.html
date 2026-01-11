@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>F1 Flowy Air Simulation with Floor Wheels</title>
+<style>
+.sim-wrapper {
+ max-width: 900px;
+ margin: 80px auto;
+ background: #0e0e0e;
+ border-radius: 14px;
+ padding: 20px;
+}
+
+.controls {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+ gap: 14px;
+ margin-bottom: 20px;
+ font-family: 'JetBrains Mono', monospace;
+ color: #e5e5e5;
+}
+
+.controls label { font-size: 13px; }
+.controls input[type="range"] { width: 100%; }
+
+.toggle { display: flex; align-items: center; gap: 8px; }
+
+.sim-svg { width: 100%; border-radius: 12px; background: #111; }
+
+/* Diagram */
+.ground { fill: #2a2a2a; }
+.carBody { fill: #001f3f; } /* Navy dark blue */
+.rearWing { fill: #cc0000; }
+.rearWingPillar { fill: #cc0000; }
+.beamWing { fill: #800000; }
+/* Floor */
+.floor { fill: #b30000; }
+/* Floor edges as “wheel hints” */
+.floorWheel { fill: #333333; }
+
+/* Airflow streaks */
+.particle { stroke-width: 2; stroke-linecap: round; }
+
+/* Labels */
+.label { fill: #e5e5e5; font-size: 14px; font-family: 'JetBrains Mono', monospace; }
+
+/* Animations */
+.porpoising { animation: bounce 0.6s ease-in-out infinite; }
+
+@keyframes bounce {
+ 0% { transform: translateY(0); }
+ 50% { transform: translateY(8px); }
+ 100% { transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="sim-wrapper">
+
+ <!-- Controls -->
+ <div class="controls">
+   <label>
+     Ride Height (mm)
+     <input type="range" id="rideHeight" min="-20" max="70" value="15">
+   </label>
+
+   <label>
+     Speed (km/h)
+     <input type="range" id="speed" min="300" max="600" value="400">
+   </label>
+
+   <label>
+     Venturi Throat Width
+     <input type="range" id="throat" min="0" max="50" value="0">
+   </label>
+
+   <label>
+     Diffuser Angle (°)
+     <input type="range" id="diffuser" min="4" max="14" value="8">
+   </label>
+
+   <label class="toggle">
+     <input type="checkbox" id="porpoising">
+     Porpoising Mode
+   </label>
+
+   <label class="toggle">
+     <input type="checkbox" id="showPressure" checked>
+     Show Pressure
+   </label>
+ </div>
+
+ <!-- Visualization -->
+ <svg viewBox="0 0 900 300" class="sim-svg">
+
+   <defs>
+     <linearGradient id="pressureGrad" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="0%" stop-color="#ff4d4d"/>
+       <stop offset="100%" stop-color="#4fc3ff"/>
+     </linearGradient>
+   </defs>
+
+   <!-- Ground -->
+   <rect x="0" y="250" width="900" height="50" class="ground"/>
+
+   <!-- Pressure field -->
+   <rect id="pressureField" x="0" y="150" width="900" height="100"
+         fill="url(#pressureGrad)" opacity="0.35"/>
+
+   <!-- Car Group -->
+   <g id="carGroup">
+     <!-- Car Body -->
+     <path class="carBody"
+       d="M230 110
+          Q260 80 350 80
+          L550 80
+          Q640 80 670 110
+          L670 130
+          L540 130
+          L490 150
+          L410 150
+          L360 130
+          L230 130 Z"/>
+    
+     <!-- Rear Wing -->
+     <rect x="280" y="50" width="340" height="18" class="rearWing"/>
+     <rect x="280" y="50" width="10" height="30" class="rearWingPillar"/>
+     <rect x="610" y="50" width="10" height="30" class="rearWingPillar"/>
+    
+     <!-- Beam Wing Area -->
+     <rect x="430" y="95" width="40" height="12" class="beamWing"/>
+    
+     <!-- Venturi floor -->
+     <path id="floor"
+       d="M230 130
+          L360 130
+          L410 150
+          L490 150
+          L540 130
+          L670 130
+          L665 170
+          L235 170 Z"
+       class="floor"/>
+    
+     <!-- Floor wheels (edges under the car) -->
+     <rect x="230" y="130" width="40" height="40" class="floorWheel"/>
+     <rect x="634" y="130" width="40" height="40" class="floorWheel"/> <!-- mirrored right -->
+   </g>
+
+   <!-- Airflow container -->
+   <g id="airParticles"></g>
+
+   <!-- Labels -->
+   <text x="30" y="170" class="label">High Pressure</text>
+   <text x="30" y="240" class="label">Low Pressure</text>
+   <text x="380" y="185" class="label">Venturi Throat</text>
+
+ </svg>
+</div>
+
+<script>
+const rideHeight = document.getElementById("rideHeight");
+const speed = document.getElementById("speed");
+const throat = document.getElementById("throat");
+const diffuser = document.getElementById("diffuser");
+const porpoising = document.getElementById("porpoising");
+const showPressure = document.getElementById("showPressure");
+
+const carGroup = document.getElementById("carGroup");
+const floor = document.getElementById("floor");
+const pressureField = document.getElementById("pressureField");
+const airContainer = document.getElementById("airParticles");
+
+const particles = [];
+const numParticles = 120;
+
+// Initialize particles as lines
+for (let i = 0; i < numParticles; i++) {
+ const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+ line.setAttribute("stroke-linecap", "round");
+ line.setAttribute("class", "particle");
+ airContainer.appendChild(line);
+
+ const startY = 160 + Math.random() * 50;
+
+ particles.push({
+   el: line,
+   x: 230 + Math.random() * 400,
+   y: startY,
+   speed: 1 + Math.random() * 2,
+   waveOffset: Math.random() * Math.PI * 2,
+   history: Array(2).fill({x: 230, y: startY})
+ });
+}
+
+function updateSimulation() {
+ carGroup.setAttribute("transform", `translate(0, ${-rideHeight.value / 2})`);
+
+ const t = throat.value;
+
+ const leftCut = 235;
+ const rightcut = 665;
+ floor.setAttribute(
+   "d",
+   `M230 130
+    L360 130
+    L410 ${150 + t}
+    L490 ${150 + t}
+    L540 130
+    L670 130
+    L670 170
+    L230 170 Z`
+ );
+
+ floor.style.transform = `skewX(${diffuser.value / 6}deg)`;
+ pressureField.style.display = showPressure.checked ? "block" : "none";
+ carGroup.classList.toggle("porpoising", porpoising.checked);
+}
+
+function animateParticles() {
+ const speedFactor = speed.value / 250;
+
+ particles.forEach(p => {
+   const amplitude = 4;
+   const frequency = 0.02;
+
+   let yNew = p.y + Math.sin(p.x * frequency + p.waveOffset) * amplitude;
+
+   const throatStart = 410;
+   const throatEnd = 490;
+   const centerY = 150 + throat.value / 2 + 10;
+   if (p.x > throatStart && p.x < throatEnd) {
+     const progress = (p.x - throatStart) / (throatEnd - throatStart);
+     yNew = yNew * (1 - progress) + centerY * progress;
+   }
+
+   const trailLength = Math.max(2, Math.min(6, Math.floor(speed.value / 100)));
+   p.history.push({x: p.x, y: p.y});
+   if (p.history.length > trailLength) p.history.shift();
+
+   const first = p.history[0];
+   const last = p.history[p.history.length - 1];
+
+   const pressureRatio = (p.y - 150) / 60;
+   const r = Math.round(255 * (1 - pressureRatio));
+   const g = 50;
+   const b = Math.round(255 * pressureRatio);
+
+   p.el.setAttribute("stroke", `rgb(${r},${g},${b})`);
+   p.el.setAttribute("x1", first.x);
+   p.el.setAttribute("y1", first.y);
+   p.el.setAttribute("x2", last.x);
+   p.el.setAttribute("y2", last.y);
+   p.el.setAttribute("stroke-opacity", 0.2 + 0.5 * (p.history.length / trailLength));
+
+   p.y = yNew;
+   p.x += p.speed * speedFactor;
+
+   if (p.x > 670) {
+     p.x = 230;
+     p.y = 160 + Math.random() * 50;
+     p.waveOffset = Math.random() * Math.PI * 2;
+     p.history = Array(trailLength).fill({x: 230, y: p.y});
+   }
+ });
+
+ requestAnimationFrame(animateParticles);
+}
+
+document.querySelectorAll("input").forEach(input =>
+ input.addEventListener("input", updateSimulation)
+);
+
+updateSimulation();
+animateParticles();
+</script>
+</body>
+</html>
+
+
+

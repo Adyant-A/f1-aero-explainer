@@ -12,9 +12,7 @@
     <h1>Ground Effect: How Formula 1 Cars Maximize Aerodynamic Efficiency</h1>
     <br>
     <!--Introduction-->
-    <p>Formula 1 cars are desinged with one primary goal: to go as fast as possible. However, raw engine power alone
-        isn't enough. To achieve the higher speeds, engineers focus heavily on aerodynamics. Specifically, reducing drag
-        while maxmizing grip. One of the most effective ways F1 cars do this is by utilizing the phenomenon known as
+    <p>Formula 1 cars are designed with one primary goal: to go as fast as possible. However, raw engine power alone isn't enough. To achieve the higher speeds, engineers focus heavily on aerodynamics. Specifically, reducing drag while maximizing grip. One of the most effective ways F1 cars do this is by utilizing the phenomenon known as
         <strong>ground effect</strong>.
     </p>
     <p>Aerodynamics studies the airflow around objects. In F1, it generates downforce and creates drag. Downforce pushes
@@ -109,189 +107,14 @@
         on ground effect aerodynamics to generate the necessary downforce for high-speed cornering.
     </p>
     <h3>Interactive Simulation</h3>
-    <p>Use the controls below to see how different factors affect ground effect aerodynamics in Formula 1 cars.</p>
-    <div class="sim-wrapper">
+    <p>Try out this interactive simulation I made to showcase how ground effect works! Use the controls below to see how different factors affect ground effect aerodynamics in Formula 1 cars.</p>
 
-        <!-- Controls -->
-        <div class="controls">
-            <label>
-                Ride Height (mm)
-                <input type="range" id="rideHeight" min="5" max="50" value="15">
-            </label>
-
-            <label>
-                Speed (km/h)
-                <input type="range" id="speed" min="100" max="330" value="250">
-            </label>
-
-            <label>
-                Venturi Throat Width
-                <input type="range" id="throat" min="6" max="30" value="12">
-            </label>
-
-            <label>
-                Diffuser Angle (°)
-                <input type="range" id="diffuser" min="4" max="14" value="8">
-            </label>
-
-            <label class="toggle">
-                <input type="checkbox" id="porpoising">
-                Porpoising Mode
-            </label>
-
-            <label class="toggle">
-                <input type="checkbox" id="showPressure" checked>
-                Show Pressure
-            </label>
-        </div>
-
-        <!-- Visualization -->
-        <svg viewBox="0 0 900 300" class="sim-svg">
-
-            <defs>
-                <linearGradient id="pressureGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#ff4d4d" />
-                    <stop offset="100%" stop-color="#4fc3ff" />
-                </linearGradient>
-            </defs>
-
-            <!-- Ground -->
-            <rect x="0" y="250" width="900" height="50" class="ground" />
-
-            <!-- Pressure field -->
-            <rect id="pressureField" x="0" y="150" width="900" height="100" fill="url(#pressureGrad)" opacity="0.35" />
-
-            <!-- Car Group -->
-            <g id="carGroup">
-                <rect x="230" y="70" width="440" height="40" rx="12" class="car" />
-                <path id="floor" d="M230 130
-           L360 130
-           L410 150
-           L490 150
-           L540 130
-           L670 130
-           L670 165
-           L230 165 Z" class="floor" />
-            </g>
-
-            <!-- Airflow paths -->
-            <g id="airParticles"></g>
-
-            <!-- Labels -->
-            <text x="30" y="170" class="label">High Pressure</text>
-            <text x="30" y="240" class="label">Low Pressure</text>
-            <text x="380" y="185" class="label">Venturi Throat</text>
-
-        </svg>
-    </div>
-
-
-
-    <script>
-        const rideHeight = document.getElementById("rideHeight");
-        const speed = document.getElementById("speed");
-        const throat = document.getElementById("throat");
-        const diffuser = document.getElementById("diffuser");
-        const porpoising = document.getElementById("porpoising");
-        const showPressure = document.getElementById("showPressure");
-
-        const carGroup = document.getElementById("carGroup");
-        const floor = document.getElementById("floor");
-        const pressureField = document.getElementById("pressureField");
-        const airContainer = document.getElementById("airParticles");
-
-        const particles = [];
-        const numParticles = 50;
-
-        // Initialize particles
-        for (let i = 0; i < numParticles; i++) {
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("r", 2);
-            circle.setAttribute("class", "particle");
-            airContainer.appendChild(circle);
-            particles.push({
-                el: circle,
-                x: 230 + Math.random() * 400,
-                y: 150 + Math.random() * 60,
-                baseY: 150 + Math.random() * 60,
-                speed: 1 + Math.random() * 2,
-                waveOffset: Math.random() * Math.PI * 2
-            });
-        }
-
-        function updateSimulation() {
-            // Ride height
-            carGroup.setAttribute("transform", `translate(0, ${-rideHeight.value / 2})`);
-
-            // Throat narrowing
-            const t = throat.value;
-            floor.setAttribute(
-                "d",
-                `M230 130
-     L360 130
-     L410 ${150 + t}
-     L490 ${150 + t}
-     L540 130
-     L670 130
-     L670 165
-     L230 165 Z`
-            );
-
-            // Diffuser angle
-            floor.style.transform = `skewX(${diffuser.value / 6}deg)`;
-
-            // Pressure visibility
-            pressureField.style.display = showPressure.checked ? "block" : "none";
-
-            // Porpoising
-            carGroup.classList.toggle("porpoising", porpoising.checked);
-        }
-
-        function animateParticles(time) {
-            const speedFactor = speed.value / 250;
-
-            particles.forEach(p => {
-                p.x += p.speed * speedFactor;
-
-                // Curvy motion using sine wave
-                const amplitude = 6; // curve height
-                const frequency = 0.02; // wave frequency
-                p.y = p.baseY + Math.sin(p.x * frequency + p.waveOffset) * amplitude;
-
-                // Funnel toward Venturi throat
-                const throatStart = 410;
-                const throatEnd = 490;
-                const centerY = 150 + throat.value / 2;
-                if (p.x > throatStart && p.x < throatEnd) {
-                    const progress = (p.x - throatStart) / (throatEnd - throatStart);
-                    p.y = p.y * (1 - progress) + centerY * progress;
-                }
-
-                // Reset particle
-                if (p.x > 670) {
-                    p.x = 230;
-                    p.baseY = 150 + Math.random() * 60;
-                    p.waveOffset = Math.random() * Math.PI * 2;
-                }
-
-                // Update particle
-                p.el.setAttribute("cx", p.x);
-                p.el.setAttribute("cy", p.y);
-            });
-
-            requestAnimationFrame(animateParticles);
-        }
-
-        // Event listeners
-        document.querySelectorAll("input").forEach(input =>
-            input.addEventListener("input", updateSimulation)
-        );
-
-        updateSimulation();
-        animateParticles();
-
-
-    </script>
+    <!-- Include the simulation HTML here -->
+    <iframe src="f1sim.html" width="100%" height="520" style="border:none;"></iframe>
+    
+    <p class="caption">
+        The simulation shows how ride height, speed, venturi throat width, and diffuser angle impact ground effect aerodynamics. Notice how the airflow lines become longer and move faster through the Venturi throat section, this represents how the air accelerates and converges beneath the floor as the ride hieght lowers and the tunnel narrows. This is used to explain the increased downforce from ground effect. Notice how changes to diffuser angle influence how smoothly airflow exits the car, and how pressure shifts between high(red) and low(blue) regions as speed increases. Finally enabling porpoising simulates the bouncing motion caused by airflow stalling and reattaching under the car at extreme ride heights.
+    </p>
 
     <br>
     <h2>Benefits and Risks</h2>
