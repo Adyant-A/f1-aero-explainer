@@ -120,23 +120,25 @@
         second counts.
     </p>
 
-    
+
     <div style="background-color: #F5F5F5; padding: 30px; text-align: center;">
-        <img src="images/newNewF1image.png" alt="Annotated F1 car diagram with airflow"
+        <img src="images/Screenshot 2026-01-12 at 7.59.15 PM.png" alt="Annotated F1 car diagram with airflow"
             class="diagram">
         <p class="caption">
-            Key parts of a Formula 1 car and airflow: Front Wing, Wide Section/Inlet, Throat, Underbody/ Floor, Diffuser/Exit, Rear Wing, Car Body/Chassis, Rear Wing, Tires. The airflow arrows indicate how air moves faster under the car through the narrow throat, creating low pressure and generating downforce as symbolized by the red(higher pressure) to blue(lower pressure) gradient.
+            Key parts of a Formula 1 car and airflow: Front Wing, Wide Section/Inlet, Throat, Underbody/ Floor,
+            Diffuser/Exit, Rear Wing, Car Body/Chassis, Rear Wing, Tires. The airflow arrows indicate how air moves
+            faster under the car through the narrow throat, creating low pressure and generating downforce as symbolized
+            by the red(higher pressure) to blue(lower pressure) gradient.
         </p>
     </div>
-    
+
 
     <!-- Ground Effect -->
     <h2 id="ground-effect">Ground Effect</h2>
-    <p>So far we've looked at how airflow can be manipulated to create low pressure zones under the car and how Venturi
-        tunnels help achieve this. Venturi tunnels create <span class="medium">ground effect</span> which is what
-        happens when
-        these Venturi tunnels operate in close proximity to track surfaces.
-    </p>
+    <p>So far we've looked at how airflow can be manipulated to create low pressure zones under the car by utilizing
+        venturi tunnels. These venturi tunnels create a phenomenon known as <span class="medium">ground effect</span>,
+        which occurs when the car runs very low to the ground.</p>
+
     <p>As the car moves forward on the track, the floor and the ground together form a long, enclosed channel. The
         closer this channel is to the ground, the more pronounced the Venturi effect becomes and the more tightly
         the airflow is constrained. This forces air to move even faster through the tunnels, strengthening the low
@@ -147,11 +149,38 @@
 
     <!-- Interactive Simulation -->
     <h3 id="interactive">Interactive Simulation</h3>
-    <p>Try out this interactive simulation I made to showcase how ground effect works! Use the controls below to see how
-        different factors affect ground effect aerodynamics in Formula 1 cars.</p>
+    <p>
+        Here's what you can explore in this interactive simulation of ground effect in Formula 1 cars.
+        Adjust the controls to see how different factors influence airflow and downforce:
+    </p>
+    <ul>
+        <li><strong>Ride Height:</strong> Lowering the car closer to the ground accelerates the airflow beneath the
+            floor, increasing downforce, while raising it reduces ground effect. Notice how the airflow
+            patterns change as you adjust the ride height.
+        </li>
+        <li><strong>Speed:</strong> Faster speeds make the airflow move quicker through the Venturi tunnel, amplifying
+            pressure differences and downforce. Notice how lines get longer and the ground effect 
+        becomes more exaggerated as you increase speed.
+        </li>
+        <li><strong>Venturi Throat Width:</strong> Making the tunnel narrower accelerates air more, generating stronger
+            suction. Widening it slows the air and reduces downforce.</li>
+        <li><strong>Diffuser Angle:</strong> Steeper angles help the airflow expand smoothly at the rear, improving rear.
+            downforce. Notice how the airflow changes the angle it approaches the venturi tunnels as the
+        angle of the diffuser changes.
+        </li>
+        <li><strong>Porpoising Mode:</strong> Simulates the bouncing effect caused when the airflow stalls and
+            reattaches at extreme ride heights, showing the instability that teams must manage.</li>
+    </ul>
+    <p>
+        The airflow lines in the simulation are colored <span style="color:#ff4d4d;">red</span> and <span
+            style="color:#00aaff;">blue</span> to represent pressure: red regions indicate high pressure where air slows
+        down, and blue regions indicate low pressure where air accelerates.
+        As you adjust the controls, notice how these regions shift and how the airflow behaves around the Venturi
+        throat, diffuser, and underbody. Additionally, use the pause button to stop the simulation and analyze specific configurations. Hope you like the simulation I created!
+    </p>
     <iframe src="f1sim.html" width="100%" height="520" style="border:none; overflow:hidden;" scrolling="no">
     </iframe>
-    <p class="caption">
+    <!--<p class="caption">
         The simulation shows how ride height, speed, venturi throat width, and diffuser angle impact ground effect
         aerodynamics. Notice how the airflow lines become longer and move faster through the Venturi throat section,
         this represents how the air accelerates and converges beneath the floor as the ride height lowers and the tunnel
@@ -159,7 +188,7 @@
         angle influence how smoothly airflow exits the car, and how pressure shifts between high(red) and low(blue)
         regions as speed increases. Finally enabling porpoising simulates the bouncing motion caused by airflow stalling
         and reattaching under the car at extreme ride heights.
-    </p>
+    </p>-->
 
     <!-- Benefits and Risks -->
     <h2 id="benefits-risks">Benefits and Risks</h2>
