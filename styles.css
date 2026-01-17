@@ -249,3 +249,27 @@ p.caption {
     margin: 0px auto;   /* much tighter */
     max-width: 900px;
 }
+ul.no-bullets {
+    list-style-type: none; /* removes bullet */
+    padding-left: 0;       /* optional: remove extra indent */
+    margin-left: 0;        /* optional: remove extra spacing */
+}
+.mediumTeal {
+    font-weight: 700;
+    color: #017575
+}
+
+.mediumBlue {
+    font-weight: 600;
+    color: #1f3ce4
+}
+
+.mediumRed {
+    font-weight: 600;
+    color: #b81515
+}
+
+.mediumYellow {
+    font-weight: 600;
+    color: #FFB84D
+}
