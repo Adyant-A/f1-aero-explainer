@@ -34,7 +34,7 @@
     <!--Introduction-->
     <h2 id="introduction">Introduction</h2>
     <p>Formula 1 cars are designed with one primary goal: to go as fast as possible. However, raw engine power alone
-        isn't enough. To achieve the higher speeds, engineers focus heavily on <span class="medium">aerodynamics</span>.
+        isn't enough. To achieve higher speeds, engineers focus heavily on <span class="medium">aerodynamics</span>.
         Specifically, reducing drag
         while maximizing grip. One of the most effective ways F1 cars do this is by utilizing the phenomenon known as
         <span class="mediumTeal">ground effect</span>.
@@ -60,45 +60,11 @@
         low-pressure zone under the car. This low pressure effectively sucks the car towards the ground, increasing
         downforce without significantly increasing drag.
     </p>
-
-    <!-- Venturi Diagram -->
-    <div style="text-align:center;">
-        <svg width="700" height="300" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
-
-            <!-- Background -->
-            <rect width="700" height="300" fill="#F2F2F2" />
-
-            <!-- Wide inlet -->
-            <rect x="50" y="140" width="150" height="40" fill="#cccccc" />
-            <text x="125" y="90" text-anchor="middle" font-size="14" fill="#333">Wide Section</text>
-            <text x="125" y="200" text-anchor="middle" font-size="14" fill="#333">Slow Air → High Pressure</text>
-
-            <!-- Narrow throat -->
-            <rect x="250" y="145" width="100" height="30" fill="#999999" />
-            <text x="300" y="90" text-anchor="middle" font-size="14" fill="#333">Throat</text>
-            <text x="300" y="200" text-anchor="middle" font-size="14" fill="#333">Fast Air → Low Pressure</text>
-
-            <!-- Diffuser -->
-            <rect x="400" y="140" width="200" height="40" fill="#cccccc" />
-            <text x="500" y="90" text-anchor="middle" font-size="14" fill="#333">Diffuser</text>
-            <text x="500" y="200" text-anchor="middle" font-size="14" fill="#333">Air slows → Pressure returns</text>
-
-            <!-- Airflow arrows -->
-            <defs>
-                <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"
-                    markerUnits="strokeWidth">
-                    <path d="M0,0 L0,10 L10,5 z" fill="#00aaff" />
-                </marker>
-            </defs>
-
-            <line x1="75" y1="120" x2="175" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)" />
-            <line x1="275" y1="120" x2="325" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)" />
-            <line x1="425" y1="120" x2="575" y2="120" stroke="#00aaff" stroke-width="4" marker-end="url(#arrow)" />
-        </svg>
-    </div>
+    <br>
+    <img src="images/BernouliF1.png" alt="Diagram illustrating the Bernoulli effect" class="diagram">
     <p class="caption">
-        Diagram illustrating the Venturi effect: airflow speeds up in the narrow throat,<br>
-        lowering pressure, and expands smoothly in the diffuser.
+        Diagram illustrating how Bernoulli's principle is used in f1: airflow speeds up in the narrow throat,<br>
+        where the pressure is lower, and expands smoothly in the diffuser.
     </p>
     <!-- Venturi -->
     <h2 id="venturi">Venturi Tunnels</h2>
@@ -111,7 +77,7 @@
     </p>
     <p>These sculpted channels are meticulously created to handle the air passing through the underside of the car. As
         air enters these tunnels, it is forced into the narrow throat of the tunnel and speeds up similar to
-        squeezing a garden hose. As we learned from <span class="medium">Bernoulli's principle</span>, the faster air
+        squeezing a garden hose. Due to <span class="medium">Bernoulli's principle</span>, the faster air
         creates lower pressure, which
         pulls the car downwards. The <span class="mediumTeal">rear diffuser</span> at the back of the car now plays its
         crucial role. The rear diffuser,
@@ -122,7 +88,7 @@
         maintains downforce, and minimizes drag.</p>
     <p>
         Overall, by engineering this technology, engineers can generate tremendous levels of <span
-            class="mediumTeal">grip</span> while
+            class="medium">grip</span> while
         keeping the car aerodynamically efficient. This balance is crucial in Formula 1, where every fraction of a
         second counts.
     </p>
@@ -159,7 +125,7 @@
     <!-- Interactive Simulation -->
     <h3 id="interactive">Interactive Simulation</h3>
     <p>
-        Here's what you can explore in this interactive simulation of ground effect in Formula 1 cars.
+        Here's what you can explore in this interactive simulation I made of ground effect in Formula 1 cars.
         Adjust the controls to see how different factors influence airflow and downforce:
     </p>
     <ul>
@@ -192,7 +158,7 @@
     <iframe src="f1sim.html" width="100%" height="520" style="border:none; overflow:hidden;" scrolling="no">
     </iframe>
     <!-- Benefits and Risks -->
-    <h2 id="benefits-risks">Benefits and Risks</h2>
+    <h2 id="benefits-risks">Benefits and Risks of Ground Effect</h2>
     <h3>Benefits</h3>
     <ol>
         <li>
@@ -230,7 +196,7 @@
 
     <!-- History -->
     <h2 id="history">History of Ground Effect in Formula 1</h2>
-    <p>Ground effect aerodynamics has a storied history in Formula 1, marked by innovation, regulation changes, and
+    <p>Ground effect aerodynamics has an important history in Formula 1, marked by innovation, regulation changes, and
         ongoing development. The concept was first seriously explored in the late 1970s, with teams like Lotus
         pioneering the use of Venturi tunnels and side skirts to maximize ground effect. The Lotus 78 and later the
         Lotus 79 were revolutionary, dominating the 1978 season with their advanced ground effect designs.</p>
@@ -240,8 +206,7 @@
         ground effect.</p>
     <p>Despite these regulations, ground effect principles continued to influence F1 car design. In recent years, with
         the 2022 regulations, ground effect has made a significant comeback. The new rules reintroduced Venturi tunnels
-        and underfloor aerodynamics as primary sources of downforce, aiming to improve racing by reducing the
-        aerodynamic wake and allowing cars to follow each other more closely.</p>
+        and underfloor aerodynamics as primary sources of downforce, allowing cars to follow each other more closely.</p>
     <p>Today, ground effect remains a critical aspect of F1 aerodynamics, with teams continuously refining their
         underfloor designs to maximize performance within the regulatory framework. The ongoing evolution of ground
         effect technology highlights its enduring importance in the quest for speed and efficiency in Formula 1 racing.
@@ -260,7 +225,7 @@
             zones</span> beneath the car. By optimizing airflow under the car
         and maintaining close proximity to the track, F1 cars achieve exceptional grip and performance. However, this
         technology also introduces challenges such as ride height sensitivity and porpoising that teams must carefully
-        manage. Overall, <span class="medium">ground effect</span> remains a cornerstone of modern F1 engineering,
+        manage. Overall, <span class="medium">ground effect</span> remains an important part of modern F1 engineering,
         pushing the boundaries of speed
         and handling on the racetrack.
     </p>
@@ -290,13 +255,6 @@
                     Medium: The Aerodynamics of Formula 1 - A Physicist View</li>
             <li><a href="http://www.f1now.co.uk/the-bernoulli-effect/" target="_blank" rel="noopener noreferrer">
                     F1now.co.uk: The Bernoulli Effect</li>
-            <li> "Aston Martin AMR25 Aramco F1 Ground Effect Visual" Image.
-                <a href=""
-                    target="_blank" rel="noopener noreferrer">
-                </a>
-            </li>
-            <li>[Placeholder] Image: Lotus 79 Ground Effect</li>
-            <li>[Placeholder] General F1 Aerodynamics References</li>
         </ul>
     </div>
 
